@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMI / Loan Calculator | LogicTools</title>
+    <meta name="description" content="Calculate your monthly home or car loan EMI and total payable amount instantly.">
+    <link rel="stylesheet" href="/style.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1176438427242571"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="/" class="nav-back">← Back to Tools</a>
+                <a href="/" class="logo">LogicTools</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div style="max-width: 600px; margin: 3rem auto;">
+            <div class="card">
+                <h1 style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <span>💰</span> EMI / Loan Calculator
+                </h1>
+                <p style="color: var(--text-muted); margin-bottom: 2rem;">Plan your finances with accuracy.</p>
+
+                <div class="input-group">
+                    <label for="amount">Loan Amount ($)</label>
+                    <input type="number" id="amount" placeholder="e.g. 50000">
+                </div>
+
+                <div class="input-group">
+                    <label for="rate">Interest Rate (% per year)</label>
+                    <input type="number" id="rate" step="0.1" placeholder="e.g. 8.5">
+                </div>
+
+                <div class="input-group">
+                    <label for="tenure">Tenure (Years)</label>
+                    <input type="number" id="tenure" placeholder="e.g. 15">
+                </div>
+
+                <button id="calculate-btn" class="btn btn-primary">Calculate EMI</button>
+
+                <div id="result-container" class="result hidden">
+                    <div>
+                        <p
+                            style="color: var(--text-muted); text-transform: uppercase; font-size: 0.8rem; font-weight: 700;">
+                            Monthly EMI</p>
+                        <h3 id="emi-value">$0</h3>
+                    </div>
+                    <div class="mt-4" style="border-top: 1px solid rgba(16, 185, 129, 0.2); padding-top: 1rem;">
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Total Payable Amount: <span
+                                id="total-payable" style="color: var(--text); font-weight: 600;">$0</span></p>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Total Interest: <span
+                                id="total-interest" style="color: var(--text); font-weight: 600;">$0</span></p>
+                    </div>
+                    <p class="formula mt-4">Note: Results are approximate based on standard reducing balance interest.
+                    </p>
+                </div>
+            </div>
+
+            <section class="mt-4" style="padding: 1rem;">
+                <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">What is EMI?</h2>
+                <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+                    Equated Monthly Installment (EMI) is a fixed payment amount made by a borrower to a lender at a
+                    specified date each calendar month.
+                </p>
+
+                <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">FAQ</h2>
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <div>
+                        <h4 style="margin-bottom: 0.25rem;">Is this for home or car loans?</h4>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Both! You can use it for any loan that
+                            uses a reducing balance interest model.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 LogicTools. Simple financial tools.</p>
+        </div>
+    </footer>
+
+    <script type="module">
+        const amountInput = document.getElementById('amount');
+        const rateInput = document.getElementById('rate');
+        const tenureInput = document.getElementById('tenure');
+        const calculateBtn = document.getElementById('calculate-btn');
+        const resultContainer = document.getElementById('result-container');
+        const emiValue = document.getElementById('emi-value');
+        const totalPayable = document.getElementById('total-payable');
+        const totalInterest = document.getElementById('total-interest');
+
+        calculateBtn.addEventListener('click', () => {
+            const P = parseFloat(amountInput.value);
+            const R = parseFloat(rateInput.value) / 100 / 12;
+            const N = parseFloat(tenureInput.value) * 12;
+
+            if (isNaN(P) || isNaN(R) || isNaN(N) || P <= 0 || R < 0 || N <= 0) {
+                alert('Please enter valid positive numbers.');
+                return;
+            }
+
+            // EMI Formula: [P x R x (1+R)^N]/[(1+R)^N-1]
+            const emi = (P * R * Math.pow(1 + R, N)) / (Math.pow(1 + R, N) - 1);
+            const total = emi * N;
+            const interest = total - P;
+
+            emiValue.textContent = `$${emi.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+            totalPayable.textContent = `$${total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+            totalInterest.textContent = `$${interest.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+            resultContainer.classList.remove('hidden');
+        });
+    </script>
+</body>
+
+</html>

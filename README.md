@@ -1,2 +1,2 @@
-# logicTools
+# LogicTools
 

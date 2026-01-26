@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free QR Code Generator | LogicTools</title>
+    <meta name="description"
+        content="Generate QR codes for URLs, text, and phone numbers instantly. Free to download and use.">
+    <link rel="stylesheet" href="/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1176438427242571"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="/" class="nav-back">← Back to Tools</a>
+                <a href="/" class="logo">LogicTools</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div style="max-width: 600px; margin: 3rem auto;">
+            <div class="card">
+                <h1 style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <span>📱</span> QR Code Generator
+                </h1>
+                <p style="color: var(--text-muted); margin-bottom: 2rem;">Scan and share anything instantly.</p>
+
+                <div class="input-group">
+                    <label for="qr-type">Content Type</label>
+                    <select id="qr-type">
+                        <option value="url">URL / Website</option>
+                        <option value="text">Plain Text</option>
+                        <option value="phone">Phone Number</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="qr-input" id="input-label">Website URL</label>
+                    <input type="text" id="qr-input" placeholder="https://example.com">
+                </div>
+
+                <button id="generate-btn" class="btn btn-primary">Generate QR Code</button>
+
+                <div id="result-container" class="mt-4 hidden" style="text-align: center;">
+                    <div
+                        style="background: white; padding: 1rem; border-radius: 1rem; display: inline-block; margin-bottom: 1.5rem;">
+                        <canvas id="qr-code"></canvas>
+                    </div>
+                    <br>
+                    <a id="download-btn" class="btn"
+                        style="background: var(--card-bg); border: 1px solid var(--border); color: var(--accent);">Download
+                        PNG</a>
+                </div>
+            </div>
+
+            <section class="mt-4" style="padding: 1rem;">
+                <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">What can I use this for?</h2>
+                <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+                    QR codes are perfect for sharing links to your portfolio, business cards, or Wi-Fi passwords. Our
+                    tool generates high-quality codes that work with all smartphone cameras.
+                </p>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 LogicTools. Mobile-first tools.</p>
+        </div>
+    </footer>
+
+    <script type="module">
+        const typeSelect = document.getElementById('qr-type');
+        const inputLabel = document.getElementById('input-label');
+        const qrInput = document.getElementById('qr-input');
+        const generateBtn = document.getElementById('generate-btn');
+        const resultContainer = document.getElementById('result-container');
+        const downloadBtn = document.getElementById('download-btn');
+        const canvas = document.getElementById('qr-code');
+
+        const qr = new QRious({
+            element: canvas,
+            size: 250,
+            level: 'H'
+        });
+
+        typeSelect.addEventListener('change', () => {
+            const type = typeSelect.value;
+            if (type === 'url') {
+                inputLabel.textContent = 'Website URL';
+                qrInput.placeholder = 'https://example.com';
+            } else if (type === 'text') {
+                inputLabel.textContent = 'Enter Text';
+                qrInput.placeholder = 'Type anything...';
+            } else {
+                inputLabel.textContent = 'Phone Number';
+                qrInput.placeholder = '+1 234 567 890';
+            }
+        });
+
+        generateBtn.addEventListener('click', () => {
+            const val = qrInput.value.trim();
+            if (!val) {
+                alert('Please enter some content.');
+                return;
+            }
+
+            qr.value = val;
+            resultContainer.classList.remove('hidden');
+
+            downloadBtn.href = canvas.toDataURL('image/png');
+            downloadBtn.download = `qrcode-${Date.now()}.png`;
+        });
+    </script>
+</body>
+
+</html>

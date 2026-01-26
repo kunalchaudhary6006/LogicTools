@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CGPA to Percentage Converter | LogicTools</title>
+    <meta name="description"
+        content="Convert your CGPA to percentage instantly using standard academic formulas. Simple and accurate.">
+    <link rel="stylesheet" href="/style.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1176438427242571"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="/" class="nav-back">← Back to Tools</a>
+                <a href="/" class="logo">LogicTools</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div style="max-width: 600px; margin: 3rem auto;">
+            <div class="card">
+                <h1 style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <span>🎓</span> CGPA to Percentage
+                </h1>
+                <p style="color: var(--text-muted); margin-bottom: 2rem;">Quick conversion for university applications.
+                </p>
+
+                <div class="input-group">
+                    <label for="cgpa">Enter CGPA (Max 10)</label>
+                    <input type="number" id="cgpa" step="0.01" min="0" max="10" placeholder="e.g. 8.5">
+                </div>
+
+                <button id="calculate-btn" class="btn btn-primary">Convert Now</button>
+
+                <div id="result-container" class="result hidden">
+                    <p
+                        style="color: var(--text-muted); text-transform: uppercase; font-size: 0.8rem; font-weight: 700;">
+                        Percentage</p>
+                    <h3 id="result-value">0%</h3>
+                    <p class="formula" id="formula-display">Standard Formula: CGPA × 9.5</p>
+                </div>
+            </div>
+
+            <section class="mt-4" style="padding: 1rem;">
+                <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">Usage Note</h2>
+                <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+                    The conversion factor of <strong>9.5</strong> is widely used by many educational boards including
+                    CBSE. However, some universities might use 10.0 or other specific scales. Please check your
+                    university guidelines.
+                </p>
+
+                <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">FAQ</h2>
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <div>
+                        <h4 style="margin-bottom: 0.25rem;">Why 9.5?</h4>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">The 9.5 factor is a statistical average
+                            derived from previous year results to map CGPA to percentage marks effectively.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 LogicTools. Career & education tools.</p>
+        </div>
+    </footer>
+
+    <script type="module">
+        const cgpaInput = document.getElementById('cgpa');
+        const calculateBtn = document.getElementById('calculate-btn');
+        const resultContainer = document.getElementById('result-container');
+        const resultValue = document.getElementById('result-value');
+
+        calculateBtn.addEventListener('click', () => {
+            const cgpa = parseFloat(cgpaInput.value);
+
+            if (isNaN(cgpa) || cgpa < 0 || cgpa > 10) {
+                alert('Please enter a valid CGPA between 0 and 10.');
+                return;
+            }
+
+            const percentage = (cgpa * 9.5).toFixed(2);
+            resultValue.textContent = `${percentage}%`;
+            resultContainer.classList.remove('hidden');
+        });
+    </script>
+</body>
+
+</html>

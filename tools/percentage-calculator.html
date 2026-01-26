@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Percentage Calculator (Exam Friendly) | LogicTools</title>
+    <meta name="description"
+        content="Calculate your exam percentage easily. Just enter total marks and obtained marks. Quick and student-friendly.">
+    <link rel="stylesheet" href="/style.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1176438427242571"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="/" class="nav-back">← Back to Tools</a>
+                <a href="/" class="logo">LogicTools</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div style="max-width: 600px; margin: 3rem auto;">
+            <div class="card">
+                <h1 style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <span>📊</span> Percentage Calculator
+                </h1>
+                <p style="color: var(--text-muted); margin-bottom: 2rem;">Fastest way to calculate your exam results.
+                </p>
+
+                <div class="input-group">
+                    <label for="total">Total Marks</label>
+                    <input type="number" id="total" placeholder="e.g. 500" focus>
+                </div>
+
+                <div class="input-group">
+                    <label for="obtained">Obtained Marks</label>
+                    <input type="number" id="obtained" placeholder="e.g. 425">
+                </div>
+
+                <button id="calculate-btn" class="btn btn-primary">Calculate Result</button>
+
+                <div id="result-container" class="result hidden">
+                    <p
+                        style="color: var(--text-muted); text-transform: uppercase; font-size: 0.8rem; font-weight: 700;">
+                        Result</p>
+                    <h3 id="result-value">0%</h3>
+                    <p class="formula" id="formula-display">Formula: (Obtained / Total) * 100</p>
+                </div>
+            </div>
+
+            <section class="mt-4" style="padding: 1rem;">
+                <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">How to use?</h2>
+                <p style="color: var(--text-muted); margin-bottom: 2rem;">
+                    Simply enter the maximum possible marks in the "Total Marks" field and the marks you achieved in the
+                    "Obtained Marks" field. Click calculate to get your percentage instantly.
+                </p>
+
+                <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">FAQ</h2>
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <div>
+                        <h4 style="margin-bottom: 0.25rem;">Is this accurate?</h4>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Yes, it uses the standard percentage
+                            formula taught in schools and colleges.</p>
+                    </div>
+                    <div>
+                        <h4 style="margin-bottom: 0.25rem;">Does it save my data?</h4>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">No, all calculations happen locally on
+                            your device. We don't store any data.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 LogicTools. Student-friendly utilities.</p>
+        </div>
+    </footer>
+
+    <script type="module">
+        const totalInput = document.getElementById('total');
+        const obtainedInput = document.getElementById('obtained');
+        const calculateBtn = document.getElementById('calculate-btn');
+        const resultContainer = document.getElementById('result-container');
+        const resultValue = document.getElementById('result-value');
+        const formulaDisplay = document.getElementById('formula-display');
+
+        calculateBtn.addEventListener('click', () => {
+            const total = parseFloat(totalInput.value);
+            const obtained = parseFloat(obtainedInput.value);
+
+            if (isNaN(total) || isNaN(obtained) || total === 0) {
+                alert('Please enter valid numbers.');
+                return;
+            }
+
+            const percentage = ((obtained / total) * 100).toFixed(2);
+            resultValue.textContent = `${percentage}%`;
+            formulaDisplay.textContent = `Formula: (${obtained} / ${total}) * 100 = ${percentage}%`;
+            resultContainer.classList.remove('hidden');
+        });
+    </script>
+</body>
+
+</html>

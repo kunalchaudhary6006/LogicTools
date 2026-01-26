@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Username Availability Checker | LogicTools</title>
+    <meta name="description"
+        content="Check username availability across platforms and get smart variations & suggestions instantly.">
+    <link rel="stylesheet" href="/style.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1176438427242571"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="/" class="nav-back">← Back to Tools</a>
+                <a href="/" class="logo">LogicTools</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div style="max-width: 600px; margin: 3rem auto;">
+            <div class="card">
+                <h1 style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <span>🆔</span> Username Checker
+                </h1>
+                <p style="color: var(--text-muted); margin-bottom: 2rem;">Find the perfect online identity.</p>
+
+                <div class="input-group">
+                    <label for="username">Enter Desired Username</label>
+                    <input type="text" id="username" placeholder="e.g. johndoe">
+                </div>
+
+                <div class="input-group">
+                    <label for="platform">Platform</label>
+                    <select id="platform">
+                        <option value="general">General / Web</option>
+                        <option value="social">Social Media (IG, X, etc.)</option>
+                        <option value="gaming">Gaming (Steam, Xbox)</option>
+                    </select>
+                </div>
+
+                <button id="check-btn" class="btn btn-primary">Check Availability</button>
+
+                <div id="result-container" class="mt-4 hidden">
+                    <div id="status-card" class="result" style="padding: 1rem;">
+                        <p id="status-text" style="font-weight: 700; font-size: 1.2rem;"></p>
+                    </div>
+
+                    <div id="suggestions" class="mt-4">
+                        <h4 style="margin-bottom: 1rem;">Suggested Alternatives:</h4>
+                        <div id="suggestion-list" style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                            <!-- Variations will appear here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <section class="mt-4" style="padding: 1rem;">
+                <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">How it works</h2>
+                <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+                    This tool uses a logical algorithm to predict availability based on common username patterns and
+                    platform-specific constraints. Note: This is an analytical check, not a real-time platform API call.
+                </p>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 LogicTools. Identity tools.</p>
+        </div>
+    </footer>
+
+    <script type="module">
+        const usernameInput = document.getElementById('username');
+        const checkBtn = document.getElementById('check-btn');
+        const resultContainer = document.getElementById('result-container');
+        const statusCard = document.getElementById('status-card');
+        const statusText = document.getElementById('status-text');
+        const suggestionList = document.getElementById('suggestion-list');
+
+        checkBtn.addEventListener('click', () => {
+            const user = usernameInput.value.trim().toLowerCase();
+            if (!user) {
+                alert('Please enter a username.');
+                return;
+            }
+
+            checkBtn.textContent = "Checking...";
+            checkBtn.disabled = true;
+
+            // Simulated delay for "Logical Check"
+            setTimeout(() => {
+                checkBtn.textContent = "Check Availability";
+                checkBtn.disabled = false;
+                resultContainer.classList.remove('hidden');
+
+                // Logic: Short usernames or common ones are "likely taken"
+                const isCommon = ["admin", "user", "guest", "test", "root", "dev", "john", "doe"].includes(user);
+                const isShort = user.length < 5;
+
+                if (isCommon || (isShort && Math.random() > 0.3)) {
+                    statusText.textContent = "🔴 Likely Taken";
+                    statusCard.style.background = "rgba(239, 68, 68, 0.1)";
+                    statusCard.style.borderColor = "rgba(239, 68, 68, 0.2)";
+                    statusText.style.color = "var(--error)";
+                } else {
+                    statusText.textContent = "🟢 Likely Available";
+                    statusCard.style.background = "rgba(16, 185, 129, 0.1)";
+                    statusCard.style.borderColor = "rgba(16, 185, 129, 0.2)";
+                    statusText.style.color = "var(--accent)";
+                }
+
+                // Generate variations
+                const year = new Date().getFullYear();
+                const variations = [
+                    `${user}_official`,
+                    `the_${user}`,
+                    `${user}_hq`,
+                    `real_${user}`,
+                    `${user}${year}`,
+                    `${user}_dev`,
+                    `it_is_${user}`,
+                    `${user}_rocks`
+                ];
+
+                suggestionList.innerHTML = variations.map(v => `
+          <div style="background: var(--card-bg); padding: 0.5rem 1rem; border-radius: 0.5rem; border: 1px solid var(--border); font-size: 0.9rem; cursor: pointer;" onclick="document.getElementById('username').value='${v}'; document.getElementById('check-btn').click();">
+            ${v}
+          </div>
+        `).join('');
+            }, 600);
+        });
+    </script>
+</body>
+
+</html>
